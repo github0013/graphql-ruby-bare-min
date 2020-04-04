@@ -12,3 +12,9 @@ docker-compose up
 open http://your_server_name/
 ```
 
+
+```rb
+# to trigger
+# rails c 
+AppSchema.subscriptions.trigger("sub_test", {}, {results: Time.now.to_i })
+```
