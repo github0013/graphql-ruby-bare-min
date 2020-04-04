@@ -1,0 +1,33 @@
+version: "3.7"
+services:
+  redis:
+    restart: always
+    image: redis:5.0.7-alpine
+    volumes:
+      - redis-data:/data
+
+  backend:
+    build:
+      context: ./bare-min/backend
+    depends_on:
+      - redis
+    working_dir: /app
+
+  frontend:
+    build:
+      context: ./bare-min/frontend
+    working_dir: /app
+
+  nginx:
+    image: nginx:1.17.8-alpine
+    depends_on:
+      - frontend
+      - backend
+    volumes:
+      - ./bare-min/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - 80:80
+
+volumes:
+  db-data: {}
+  redis-data: {}

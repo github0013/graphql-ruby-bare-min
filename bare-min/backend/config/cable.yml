@@ -1,0 +1,15 @@
+development:
+  adapter: redis
+  url: redis://redis:6379/4
+
+staging:
+  adapter: redis
+  url: redis://redis:6379/5
+
+test:
+  adapter: async
+
+production:
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/6" } %>
+  channel_prefix: app_production
